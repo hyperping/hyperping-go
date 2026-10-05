@@ -2,15 +2,19 @@
 
 Go client library for the [Hyperping](https://hyperping.io) uptime monitoring API.
 
+Maintained by Hyperping. Originally written by [Develeap](https://develeap.com)
+as `github.com/develeap/hyperping-go`; this repository continues it from
+v0.7.1 under the module path `github.com/hyperping/hyperping-go`.
+
 Used as the shared HTTP client by:
 
-- [terraform-provider-hyperping](https://github.com/develeap/terraform-provider-hyperping)
+- [terraform-provider-hyperping](https://github.com/hyperping/terraform-provider-hyperping)
 - [hyperping-exporter](https://github.com/develeap/hyperping-exporter)
 
 ## Installation
 
 ```bash
-go get github.com/develeap/hyperping-go@latest
+go get github.com/hyperping/hyperping-go@latest
 ```
 
 ## Usage
@@ -23,7 +27,7 @@ import (
     "fmt"
     "log"
 
-    hyperping "github.com/develeap/hyperping-go"
+    hyperping "github.com/hyperping/hyperping-go"
 )
 
 func main() {
@@ -131,4 +135,16 @@ func (m *MockMonitorAPI) ListMonitors(ctx context.Context) ([]hyperping.Monitor,
 
 ## License
 
-MIT. Maintained by [Develeap](https://develeap.com).
+MIT, see [LICENSE](LICENSE). Copyright Develeap (original author) and
+Hyperping. Maintained by [Hyperping](https://hyperping.io).
+
+### Migrating from `github.com/develeap/hyperping-go`
+
+The API is unchanged; only the module path differs:
+
+```bash
+go get github.com/hyperping/hyperping-go@latest
+```
+
+and replace the import path `github.com/develeap/hyperping-go` with
+`github.com/hyperping/hyperping-go`.

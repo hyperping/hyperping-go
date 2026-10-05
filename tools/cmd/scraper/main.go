@@ -17,15 +17,15 @@ import (
 	tfjson "github.com/hashicorp/terraform-json"
 	"golang.org/x/time/rate"
 
-	"github.com/develeap/hyperping-go/tools/cmd/scraper/analyzer"
-	"github.com/develeap/hyperping-go/tools/cmd/scraper/contract"
-	"github.com/develeap/hyperping-go/tools/cmd/scraper/coverage"
-	"github.com/develeap/hyperping-go/tools/cmd/scraper/diff"
-	"github.com/develeap/hyperping-go/tools/cmd/scraper/discovery"
-	"github.com/develeap/hyperping-go/tools/cmd/scraper/extractor"
-	"github.com/develeap/hyperping-go/tools/cmd/scraper/notify"
-	"github.com/develeap/hyperping-go/tools/cmd/scraper/openapi"
-	"github.com/develeap/hyperping-go/tools/cmd/scraper/utils"
+	"github.com/hyperping/hyperping-go/tools/cmd/scraper/analyzer"
+	"github.com/hyperping/hyperping-go/tools/cmd/scraper/contract"
+	"github.com/hyperping/hyperping-go/tools/cmd/scraper/coverage"
+	"github.com/hyperping/hyperping-go/tools/cmd/scraper/diff"
+	"github.com/hyperping/hyperping-go/tools/cmd/scraper/discovery"
+	"github.com/hyperping/hyperping-go/tools/cmd/scraper/extractor"
+	"github.com/hyperping/hyperping-go/tools/cmd/scraper/notify"
+	"github.com/hyperping/hyperping-go/tools/cmd/scraper/openapi"
+	"github.com/hyperping/hyperping-go/tools/cmd/scraper/utils"
 )
 
 // Command line flags.

@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"net/http"
 
-	hyperping "github.com/develeap/hyperping-go"
+	hyperping "github.com/hyperping/hyperping-go"
 )
 
 // TODO(GO-07): replace structural validation with specValidator once openapi.yaml is present.

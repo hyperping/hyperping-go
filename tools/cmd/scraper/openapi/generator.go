@@ -10,8 +10,8 @@ import (
 
 	"gopkg.in/yaml.v3"
 
-	"github.com/develeap/hyperping-go/tools/cmd/scraper/extractor"
-	"github.com/develeap/hyperping-go/tools/cmd/scraper/utils"
+	"github.com/hyperping/hyperping-go/tools/cmd/scraper/extractor"
+	"github.com/hyperping/hyperping-go/tools/cmd/scraper/utils"
 )
 
 // --- OpenAPI 3.0 data structures ---

@@ -6,7 +6,7 @@ package mockserver
 import (
 	"net/http"
 
-	hyperping "github.com/develeap/hyperping-go"
+	hyperping "github.com/hyperping/hyperping-go"
 )
 
 func registerReportHandlers(mux *http.ServeMux, store *mockStore) {

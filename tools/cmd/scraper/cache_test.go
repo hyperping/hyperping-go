@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/develeap/hyperping-go/tools/cmd/scraper/extractor"
+	"github.com/hyperping/hyperping-go/tools/cmd/scraper/extractor"
 )
 
 // savePageData is a test helper that serialises a PageData value to a JSON file.

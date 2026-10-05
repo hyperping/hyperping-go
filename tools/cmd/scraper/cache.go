@@ -8,8 +8,8 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/develeap/hyperping-go/tools/cmd/scraper/extractor"
-	"github.com/develeap/hyperping-go/tools/cmd/scraper/utils"
+	"github.com/hyperping/hyperping-go/tools/cmd/scraper/extractor"
+	"github.com/hyperping/hyperping-go/tools/cmd/scraper/utils"
 )
 
 // LoadCache reads the cache file from disk

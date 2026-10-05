@@ -9,7 +9,7 @@ import (
 
 	"github.com/go-rod/rod"
 
-	"github.com/develeap/hyperping-go/tools/cmd/scraper/extractor"
+	"github.com/hyperping/hyperping-go/tools/cmd/scraper/extractor"
 )
 
 // scrapeWithRetry attempts to scrape a page with exponential backoff.

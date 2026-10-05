@@ -1,4 +1,4 @@
-module github.com/develeap/hyperping-go/tools/cmd/scraper
+module github.com/hyperping/hyperping-go/tools/cmd/scraper
 
 go 1.26.2
 

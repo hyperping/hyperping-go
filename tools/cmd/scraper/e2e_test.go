@@ -8,10 +8,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/develeap/hyperping-go/tools/cmd/scraper/diff"
-	"github.com/develeap/hyperping-go/tools/cmd/scraper/discovery"
-	"github.com/develeap/hyperping-go/tools/cmd/scraper/extractor"
-	"github.com/develeap/hyperping-go/tools/cmd/scraper/openapi"
+	"github.com/hyperping/hyperping-go/tools/cmd/scraper/diff"
+	"github.com/hyperping/hyperping-go/tools/cmd/scraper/discovery"
+	"github.com/hyperping/hyperping-go/tools/cmd/scraper/extractor"
+	"github.com/hyperping/hyperping-go/tools/cmd/scraper/openapi"
 )
 
 const docsScrapedDir = "./docs_scraped"

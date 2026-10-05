@@ -12,8 +12,8 @@ import (
 	"strings"
 	"testing"
 
-	hyperping "github.com/develeap/hyperping-go"
-	"github.com/develeap/hyperping-go/testdata/mockserver"
+	hyperping "github.com/hyperping/hyperping-go"
+	"github.com/hyperping/hyperping-go/testdata/mockserver"
 )
 
 // helpers

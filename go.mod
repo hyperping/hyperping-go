@@ -1,4 +1,4 @@
-module github.com/develeap/hyperping-go
+module github.com/hyperping/hyperping-go
 
 go 1.26
 

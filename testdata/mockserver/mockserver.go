@@ -24,7 +24,7 @@ import (
 	"sync"
 	"testing"
 
-	hyperping "github.com/develeap/hyperping-go"
+	hyperping "github.com/hyperping/hyperping-go"
 )
 
 // RecordedRequest captures a single HTTP interaction.

@@ -18,8 +18,8 @@ import (
 
 	tfjson "github.com/hashicorp/terraform-json"
 
-	"github.com/develeap/hyperping-go/tools/cmd/scraper/analyzer"
-	"github.com/develeap/hyperping-go/tools/cmd/scraper/openapi"
+	"github.com/hyperping/hyperping-go/tools/cmd/scraper/analyzer"
+	"github.com/hyperping/hyperping-go/tools/cmd/scraper/openapi"
 )
 
 // Gap describes a single discrepancy between the API spec and the TF provider.

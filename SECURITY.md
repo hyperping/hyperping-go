@@ -13,7 +13,7 @@
 **Do not open a public GitHub issue for security vulnerabilities.**
 
 Use the GitHub Security Advisory tab to report privately:
-**[Report a Vulnerability](https://github.com/develeap/hyperping-go/security/advisories/new)**
+**[Report a Vulnerability](https://github.com/hyperping/hyperping-go/security/advisories/new)**
 
 ### What to include
 

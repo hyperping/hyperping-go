@@ -10,8 +10,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/develeap/hyperping-go/tools/cmd/scraper/extractor"
-	"github.com/develeap/hyperping-go/tools/cmd/scraper/openapi"
+	"github.com/hyperping/hyperping-go/tools/cmd/scraper/extractor"
+	"github.com/hyperping/hyperping-go/tools/cmd/scraper/openapi"
 )
 
 func main() {

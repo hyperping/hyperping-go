@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/develeap/hyperping-go/tools/cmd/scraper/diff"
+	"github.com/hyperping/hyperping-go/tools/cmd/scraper/diff"
 )
 
 func main() {

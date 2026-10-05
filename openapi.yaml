@@ -128,6 +128,18 @@ components:
         dns_expected_answer: { type: string }
         status: { type: string }
         ssl_expiration: { type: integer }
+        ip_version:
+          type: integer
+          enum: [4, 6]
+        ssl_alert_days:
+          type: integer
+          enum: [-1, 1, 3, 7, 15, 30, 60, 90]
+        ssl_reminders: { type: boolean }
+        ssl_notify_on_change: { type: boolean }
+        domain_alert_days:
+          type: integer
+          enum: [-1, 7, 14, 30, 60, 90]
+        domain_expiration: { type: [integer, "null"] }
         projectUuid: { type: string }
       example:
         uuid: mon_abc123
@@ -172,6 +184,17 @@ components:
         dns_record_type: { type: string }
         dns_nameserver: { type: string }
         dns_expected_answer: { type: string }
+        ip_version:
+          type: integer
+          enum: [4, 6]
+        ssl_alert_days:
+          type: integer
+          enum: [-1, 1, 3, 7, 15, 30, 60, 90]
+        ssl_reminders: { type: boolean }
+        ssl_notify_on_change: { type: boolean }
+        domain_alert_days:
+          type: integer
+          enum: [-1, 7, 14, 30, 60, 90]
         projectUuid: { type: string }
 
     UpdateMonitorRequest:
@@ -200,6 +223,17 @@ components:
         dns_record_type: { type: string }
         dns_nameserver: { type: string }
         dns_expected_answer: { type: string }
+        ip_version:
+          type: integer
+          enum: [4, 6]
+        ssl_alert_days:
+          type: integer
+          enum: [-1, 1, 3, 7, 15, 30, 60, 90]
+        ssl_reminders: { type: boolean }
+        ssl_notify_on_change: { type: boolean }
+        domain_alert_days:
+          type: integer
+          enum: [-1, 7, 14, 30, 60, 90]
 
     # ── Healthchecks ────────────────────────────────────────────────────────────
 
@@ -216,6 +250,7 @@ components:
       type: object
       properties:
         uuid: { type: string }
+        publicUuid: { type: string }
         name: { type: string }
         pingUrl: { type: string }
         cron: { type: string }
@@ -628,6 +663,9 @@ components:
           type: object
           additionalProperties: { type: string }
         is_group: { type: boolean }
+        type:
+          type: string
+          enum: [monitor, healthcheck, server, component]
         show_uptime: { type: boolean }
         show_response_times: { type: boolean }
         description:

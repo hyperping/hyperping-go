@@ -80,6 +80,7 @@ type StatusPageService struct {
 	UUID              string              `json:"uuid,omitempty"`
 	Name              map[string]string   `json:"name"` // language -> text
 	IsGroup           bool                `json:"is_group"`
+	Type              string              `json:"type,omitempty"` // monitor, healthcheck, server or component; empty for a group header (read-only)
 	ShowUptime        bool                `json:"show_uptime"`
 	ShowResponseTimes bool                `json:"show_response_times"`
 	Description       map[string]string   `json:"description,omitempty"`

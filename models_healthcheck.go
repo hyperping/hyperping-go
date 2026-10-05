@@ -3,6 +3,8 @@
 
 package hyperping
 
+import "encoding/json"
+
 // =============================================================================
 // Healthcheck Models
 // =============================================================================
@@ -14,12 +16,16 @@ package hyperping
 // the URL. If no ping is received within the expected period + grace period,
 // an alert is triggered.
 type Healthcheck struct {
-	UUID             string                     `json:"uuid"` // tok_abc123def456
+	UUID string `json:"uuid"` // tok_abc123def456 (the secret token of the ping URL)
+	// PublicUUID is the public id (hc_…) that status pages reference. Unlike
+	// UUID (the ping token), it is not a secret. Nil when the API does not
+	// return it (older API versions).
+	PublicUUID       *string                    `json:"publicUuid,omitempty"`
 	Name             string                     `json:"name"`
 	PingURL          string                     `json:"pingUrl"`                    // Auto-generated ping URL
 	Cron             string                     `json:"cron,omitempty"`             // Cron expression (e.g., "0 0 * * *")
-	Timezone         string                     `json:"timezone,omitempty"`         // Timezone from POST responses (e.g., "America/New_York")
-	Tz               string                     `json:"tz,omitempty"`               // Timezone from GET responses (API inconsistency: GET returns "tz")
+	Timezone         string                     `json:"timezone,omitempty"`         // Timezone (e.g., "America/New_York"); filled from "tz" when only that is returned
+	Tz               string                     `json:"tz,omitempty"`               // Timezone as returned by GET/PUT (API inconsistency: POST returns "timezone")
 	PeriodValue      *int                       `json:"periodValue,omitempty"`      // Numeric value for period
 	PeriodType       string                     `json:"periodType,omitempty"`       // seconds, minutes, hours, days
 	Period           int                        `json:"period"`                     // Calculated period in seconds
@@ -36,14 +42,38 @@ type Healthcheck struct {
 	EscalationPolicy *EscalationPolicyReference `json:"escalationPolicy,omitempty"` // Linked escalation policy
 }
 
-// GetTimezone returns the timezone value regardless of which JSON field was populated.
-// The Hyperping API is inconsistent: POST responses use "timezone" while GET responses
-// use "tz". This method abstracts over that inconsistency.
-func (h Healthcheck) GetTimezone() string {
-	if h.Timezone != "" {
-		return h.Timezone
+// healthcheckAlias prevents infinite recursion in Healthcheck.UnmarshalJSON.
+type healthcheckAlias Healthcheck
+
+// UnmarshalJSON implements json.Unmarshaler for Healthcheck.
+//
+// The Hyperping API is inconsistent about the timezone field: GET and PUT
+// responses return "tz" while POST responses return "timezone". After
+// decoding, both Timezone and Tz hold the same value whichever key the API
+// sent ("tz" wins when both are present and differ, since it is the stored
+// column), so callers reading either field see the timezone.
+func (h *Healthcheck) UnmarshalJSON(data []byte) error {
+	var a healthcheckAlias
+	if err := json.Unmarshal(data, &a); err != nil {
+		return err
 	}
-	return h.Tz
+	*h = Healthcheck(a)
+	if h.Tz != "" {
+		h.Timezone = h.Tz
+	} else {
+		h.Tz = h.Timezone
+	}
+	return nil
+}
+
+// GetTimezone returns the timezone value regardless of which JSON field was populated.
+// The Hyperping API is inconsistent: POST responses use "timezone" while GET and PUT
+// responses use "tz". "tz" is preferred, "timezone" is the fallback.
+func (h Healthcheck) GetTimezone() string {
+	if h.Tz != "" {
+		return h.Tz
+	}
+	return h.Timezone
 }
 
 // CreateHealthcheckRequest represents a request to create a healthcheck.

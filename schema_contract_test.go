@@ -286,6 +286,25 @@ func TestSchemaContract_SpecFieldsMatchGoTypes(t *testing.T) {
 				"required_keyword", "paused", "port", "alerts_wait",
 				"dns_record_type", "dns_nameserver", "dns_expected_answer",
 				"status", "ssl_expiration", "escalation_policy",
+				"ip_version", "ssl_alert_days", "ssl_reminders",
+				"ssl_notify_on_change", "domain_alert_days", "domain_expiration",
+			},
+		},
+		{
+			schema: "Healthcheck",
+			fields: []string{
+				"uuid", "publicUuid", "name", "pingUrl", "cron", "timezone", "tz",
+				"periodValue", "periodType", "period", "gracePeriod",
+				"gracePeriodValue", "gracePeriodType", "isDown", "isPaused",
+				"lastPing", "dueDate", "createdAt", "lastLogStartDate",
+				"lastLogEndDate", "escalationPolicy",
+			},
+		},
+		{
+			schema: "StatusPageService",
+			fields: []string{
+				"id", "uuid", "name", "is_group", "type", "show_uptime",
+				"show_response_times", "description", "services",
 			},
 		},
 		{

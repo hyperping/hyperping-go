@@ -57,7 +57,17 @@ type Monitor struct {
 	DNSNameserver      *string              `json:"dns_nameserver,omitempty"`
 	DNSExpectedAnswer  *string              `json:"dns_expected_answer,omitempty"`
 	Status             string               `json:"status,omitempty"`
-	SSLExpiration      *int                 `json:"ssl_expiration,omitempty"`
+	SSLExpiration      *int                 `json:"ssl_expiration,omitempty"` // Whole days (rounded down) until the TLS certificate expires (read-only)
+	// IPVersion is 4 or 6; an IPv6 monitor is checked over IPv6 only (http,
+	// port and icmp). Pointer so an absent field (older API) stays nil.
+	IPVersion *int `json:"ip_version,omitempty"`
+	// TLS certificate and domain expiry alerting. Pointers so an absent field
+	// (older API) maps to nil rather than a misleading zero value.
+	SSLAlertDays      *int  `json:"ssl_alert_days,omitempty"`       // Days before cert expiry to send the first alert (-1 = never)
+	SSLReminders      *bool `json:"ssl_reminders,omitempty"`        // Also remind at the standard steps below the threshold
+	SSLNotifyOnChange *bool `json:"ssl_notify_on_change,omitempty"` // Notify when the served certificate changes
+	DomainAlertDays   *int  `json:"domain_alert_days,omitempty"`    // Days before domain registration expiry to alert (-1 = never)
+	DomainExpiration  *int  `json:"domain_expiration,omitempty"`    // Whole days until the domain registration expires (read-only, nullable)
 }
 
 // monitorAlias is used to prevent infinite recursion in Monitor.UnmarshalJSON.
@@ -133,6 +143,11 @@ type CreateMonitorRequest struct {
 	DNSRecordType      *string         `json:"dns_record_type,omitempty"`
 	DNSNameserver      *string         `json:"dns_nameserver,omitempty"`
 	DNSExpectedAnswer  *string         `json:"dns_expected_answer,omitempty"`
+	IPVersion          *int            `json:"ip_version,omitempty"`
+	SSLAlertDays       *int            `json:"ssl_alert_days,omitempty"`
+	SSLReminders       *bool           `json:"ssl_reminders,omitempty"`
+	SSLNotifyOnChange  *bool           `json:"ssl_notify_on_change,omitempty"`
+	DomainAlertDays    *int            `json:"domain_alert_days,omitempty"`
 }
 
 // Validate checks input lengths on CreateMonitorRequest fields.
@@ -168,4 +183,9 @@ type UpdateMonitorRequest struct {
 	DNSRecordType      *string          `json:"dns_record_type,omitempty"`
 	DNSNameserver      *string          `json:"dns_nameserver,omitempty"`
 	DNSExpectedAnswer  *string          `json:"dns_expected_answer,omitempty"`
+	IPVersion          *int             `json:"ip_version,omitempty"`
+	SSLAlertDays       *int             `json:"ssl_alert_days,omitempty"`
+	SSLReminders       *bool            `json:"ssl_reminders,omitempty"`
+	SSLNotifyOnChange  *bool            `json:"ssl_notify_on_change,omitempty"`
+	DomainAlertDays    *int             `json:"domain_alert_days,omitempty"`
 }

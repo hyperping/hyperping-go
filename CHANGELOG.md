@@ -7,6 +7,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-10-05
+
+The client is now maintained by Hyperping.
+
+### Changed
+
+- **Module path is now `github.com/hyperping/hyperping-go`** (was
+  `github.com/develeap/hyperping-go`). The API is unchanged: update the
+  import path and run `go get github.com/hyperping/hyperping-go@v0.8.0`.
+  The Develeap copyright headers (MIT) are kept; a `LICENSE` file now
+  credits Develeap and Hyperping.
+
+### Added
+
+- **`Healthcheck.PublicUUID`** (`publicUuid`): the public `hc_…` id a
+  status page references. Unlike `UUID` (the `tok_…` ping token), it is not
+  a secret. `nil` when the API does not return it.
+- **`Monitor.IPVersion`** (`ip_version`, `4` or `6`) on `Monitor`,
+  `CreateMonitorRequest` and `UpdateMonitorRequest`, plus
+  `AllowedIPVersions`.
+- **TLS certificate and domain expiry alerting** on `Monitor`,
+  `CreateMonitorRequest` and `UpdateMonitorRequest`: `SSLAlertDays`,
+  `SSLReminders`, `SSLNotifyOnChange`, `DomainAlertDays`, and the read-only
+  `Monitor.DomainExpiration`. All pointers, so an absent field stays `nil`.
+  `AllowedSSLAlertDays` and `AllowedDomainAlertDays` list the accepted
+  values.
+- **`StatusPageService.Type`** (read-only): `monitor`, `healthcheck`,
+  `server` or `component`; empty for a group header.
+
+### Fixed
+
+- **Healthcheck timezone lost on read.** `GET` and `PUT /v2/healthchecks`
+  return the timezone as `tz`, `POST` returns it as `timezone`. A consumer
+  reading `Healthcheck.Timezone` after a `GET` saw an empty string (in the
+  Terraform provider: "timezone was Europe/Berlin, but now null" on a cron
+  healthcheck). `Healthcheck` now decodes both keys into both fields (`tz`
+  wins when both are present), and `GetTimezone()` prefers `tz`.
+
 ## [0.7.1] - 2026-06-09
 
 ### Fixed

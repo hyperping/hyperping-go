@@ -158,6 +158,18 @@ var (
 	// AllowedMethods contains valid HTTP methods for monitors.
 	AllowedMethods = []string{"GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS"}
 
+	// AllowedIPVersions contains valid values for a monitor's ip_version.
+	AllowedIPVersions = []int{4, 6}
+
+	// AllowedSSLAlertDays contains valid values for a monitor's ssl_alert_days
+	// (days before TLS certificate expiry to send the first alert; -1 = never).
+	AllowedSSLAlertDays = []int{-1, 1, 3, 7, 15, 30, 60, 90}
+
+	// AllowedDomainAlertDays contains valid values for a monitor's
+	// domain_alert_days (days before domain registration expiry to alert;
+	// -1 = never).
+	AllowedDomainAlertDays = []int{-1, 7, 14, 30, 60, 90}
+
 	// AllowedRegions contains valid monitor check regions.
 	// Combined from official Hyperping API documentation and real API responses.
 	// See: https://hyperping.com/docs/api/monitors/create

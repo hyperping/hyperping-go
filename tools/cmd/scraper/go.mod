@@ -3,7 +3,7 @@ module github.com/develeap/hyperping-go/tools/cmd/scraper
 go 1.26.2
 
 require (
-	github.com/PuerkitoBio/goquery v1.12.0
+	github.com/PuerkitoBio/goquery v1.13.0
 	github.com/getkin/kin-openapi v0.140.0
 	github.com/go-rod/rod v0.116.2
 	github.com/google/go-github/v68 v68.0.0
@@ -17,7 +17,7 @@ require (
 require (
 	cloud.google.com/go v0.123.0 // indirect
 	github.com/TwiN/go-color v1.4.1 // indirect
-	github.com/andybalholm/cascadia v1.3.3 // indirect
+	github.com/andybalholm/cascadia v1.3.4 // indirect
 	github.com/apparentlymart/go-textseg/v15 v15.0.0 // indirect
 	github.com/go-openapi/jsonpointer v0.22.5 // indirect
 	github.com/go-openapi/swag/jsonname v0.25.5 // indirect
@@ -39,6 +39,6 @@ require (
 	github.com/ysmood/gson v0.7.3 // indirect
 	github.com/ysmood/leakless v0.9.0 // indirect
 	github.com/zclconf/go-cty v1.18.0 // indirect
-	golang.org/x/net v0.55.0 // indirect
-	golang.org/x/text v0.37.0 // indirect
+	golang.org/x/net v0.58.0 // indirect
+	golang.org/x/text v0.41.0 // indirect
 )

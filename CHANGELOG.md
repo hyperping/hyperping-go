@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.9.0] - 2026-10-06
+
+### Changed
+
+- **`CreateStatusPageSection.Name` is now `interface{}`**: a plain string
+  (stored under the page's default language, as before) or a localized
+  `map[string]string` (language -> text), stored as sent. Assigning a string
+  still compiles; code reading the field as a `string` needs a type assertion.
+- `CreateStatusPageService.Name` (localized map) is documented for top-level
+  services too, not only group children, and `Description` takes a localized
+  map at both levels. `NameShown` keeps a single language.
+
 ## [0.8.0] - 2026-10-05
 
 The client is now maintained by Hyperping.

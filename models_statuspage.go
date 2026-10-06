@@ -145,7 +145,9 @@ type CreateStatusPageAuthenticationSettings struct {
 
 // CreateStatusPageSection represents a section in create requests.
 type CreateStatusPageSection struct {
-	Name     string                    `json:"name"`
+	// Name is a plain string (stored under the page's default language) or a
+	// localized map[string]string (language -> text), stored as sent.
+	Name     interface{}               `json:"name"`
 	IsSplit  *bool                     `json:"is_split,omitempty"`
 	Services []CreateStatusPageService `json:"services,omitempty"`
 }
@@ -154,15 +156,17 @@ type CreateStatusPageSection struct {
 // Top-level monitor entries use MonitorUUID ("monitor_uuid").
 // Nested child services inside groups use UUID ("uuid") - the Hyperping API uses
 // different field names at each nesting level.
-// Group header entries omit both UUID fields and use only NameShown + IsGroup + Services.
+// Group header entries omit both UUID fields and use only a name + IsGroup + Services.
+// Name (localized map, language -> text) is accepted at both levels; NameShown is
+// a plain string stored under the page's default language, top level only.
 type CreateStatusPageService struct {
 	MonitorUUID       *string                   `json:"monitor_uuid,omitempty"` // top-level monitor services
 	UUID              *string                   `json:"uuid,omitempty"`         // nested child services
 	NameShown         *string                   `json:"name_shown,omitempty"`   // top-level display name (string)
-	Name              map[string]string         `json:"name,omitempty"`         // nested child display name (localized map)
+	Name              map[string]string         `json:"name,omitempty"`         // display name (localized map), both levels
 	ShowUptime        *bool                     `json:"show_uptime,omitempty"`
 	ShowResponseTimes *bool                     `json:"show_response_times,omitempty"`
-	Description       interface{}               `json:"description,omitempty"` // top-level: *string, nested: map[string]string
+	Description       interface{}               `json:"description,omitempty"` // *string or map[string]string (language -> text)
 	IsGroup           *bool                     `json:"is_group,omitempty"`
 	Services          []CreateStatusPageService `json:"services,omitempty"` // nested services
 }

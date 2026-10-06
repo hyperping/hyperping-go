@@ -981,3 +981,30 @@ func TestStatusPages_RateLimit(t *testing.T) {
 		t.Error("expected error for rate limit")
 	}
 }
+
+func TestCreateStatusPageSection_LocalizedNames(t *testing.T) {
+	section := CreateStatusPageSection{
+		Name: map[string]string{"en": "Infrastructure", "de": "Infrastruktur"},
+		Services: []CreateStatusPageService{
+			{
+				MonitorUUID: stringPtr("mon_123"),
+				Name:        map[string]string{"en": "Website", "de": "Webseite"},
+				Description: map[string]string{"en": "Public site", "de": "Öffentliche Seite"},
+			},
+		},
+	}
+	got, err := json.Marshal(section)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	want := `{"name":{"de":"Infrastruktur","en":"Infrastructure"},"services":[{"monitor_uuid":"mon_123","name":{"de":"Webseite","en":"Website"},"description":{"de":"Öffentliche Seite","en":"Public site"}}]}`
+	if string(got) != want {
+		t.Errorf("got %s\nwant %s", got, want)
+	}
+
+	// A plain string still works and is sent as is.
+	got, _ = json.Marshal(CreateStatusPageSection{Name: "API Services"})
+	if string(got) != `{"name":"API Services"}` {
+		t.Errorf("got %s", got)
+	}
+}

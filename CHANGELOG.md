@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.10.0] - 2026-10-15
+
+### Added
+
+- **Status-page SSO connections** (`/v2/sso-connections`):
+  `ListSSOConnections`, `GetSSOConnection`, `CreateSSOConnection`,
+  `UpdateSSOConnection` and `DeleteSSOConnection`, with the `SSOConnection`,
+  `CreateSSOConnectionRequest` and `UpdateSSOConnectionRequest` models and an
+  `SSOConnectionAPI` interface (now part of `HyperpingAPI`). OpenID Connect
+  connections are created and changed through the API: the server checks the
+  issuer's discovery document and the client credentials before saving.
+  SAML and WorkOS connections are listed read-only. The client secret is
+  write-only and the request types never print it. Scoped to the API key's
+  project. A page uses a connection through
+  `StatusPageAuthenticationSettings.SSOConnectionUUID`.
+
 ## [0.9.0] - 2026-10-06
 
 ### Changed

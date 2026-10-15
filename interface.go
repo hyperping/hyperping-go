@@ -91,6 +91,16 @@ type StatusPageAPI interface {
 	IterStatusPages(ctx context.Context, search *string) iter.Seq2[StatusPage, error]
 }
 
+// SSOConnectionAPI defines the interface for status-page SSO connection operations.
+// This interface enables mocking in unit tests.
+type SSOConnectionAPI interface {
+	ListSSOConnections(ctx context.Context) ([]SSOConnection, error)
+	GetSSOConnection(ctx context.Context, uuid string) (*SSOConnection, error)
+	CreateSSOConnection(ctx context.Context, req CreateSSOConnectionRequest) (*SSOConnection, error)
+	UpdateSSOConnection(ctx context.Context, uuid string, req UpdateSSOConnectionRequest) (*SSOConnection, error)
+	DeleteSSOConnection(ctx context.Context, uuid string) error
+}
+
 // HyperpingAPI combines all API interfaces for the Hyperping client.
 // This is the primary interface used by the provider resources.
 type HyperpingAPI interface {
@@ -101,6 +111,7 @@ type HyperpingAPI interface {
 	OutageAPI
 	HealthcheckAPI
 	StatusPageAPI
+	SSOConnectionAPI
 }
 
 // Ensure Client implements HyperpingAPI at compile time.

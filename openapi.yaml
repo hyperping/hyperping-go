@@ -33,6 +33,8 @@ tags:
     description: Public status pages
   - name: subscribers
     description: Status page subscribers
+  - name: sso-connections
+    description: Identity providers visitors of private status pages sign in with
   - name: mcp
     description: MCP JSON-RPC 2.0 tool dispatch
 
@@ -809,6 +811,79 @@ components:
         language: { type: string }
 
     # ── MCP models ──────────────────────────────────────────────────────────────
+
+    SSOConnection:
+      type: object
+      description: >
+        An identity provider visitors of a private status page sign in with. A page
+        uses it through settings.authentication.sso_connection_uuid. The client
+        secret is never returned.
+      properties:
+        uuid: { type: string }
+        name: { type: string }
+        provider:
+          type: string
+          enum: [oidc, okta, azure, google, saml, workos]
+        allowed_domains:
+          type: array
+          items: { type: string }
+        active: { type: boolean }
+        configured: { type: boolean }
+        issuer:
+          type: ["string", "null"]
+          description: OpenID Connect only. The issuer published by the identity provider's discovery document.
+        client_id:
+          type: ["string", "null"]
+        has_client_secret: { type: boolean }
+        redirect_uri:
+          type: ["string", "null"]
+          description: OpenID Connect only. The callback URL to register in the identity provider.
+        created_at: { type: ["string", "null"] }
+        updated_at: { type: ["string", "null"] }
+      example:
+        uuid: sso_abc123
+        name: Auth0
+        provider: oidc
+        allowed_domains: [acme.com]
+        active: true
+        configured: true
+        issuer: https://acme.eu.auth0.com/
+        client_id: s8QYF2pXxk
+        has_client_secret: true
+        redirect_uri: https://api.hyperping.io/v1/auth/sso/oidc/callback
+
+    CreateSSOConnectionRequest:
+      type: object
+      required: [name, issuer, client_id, client_secret]
+      properties:
+        name: { type: string, maxLength: 255 }
+        provider:
+          type: string
+          enum: [oidc]
+          description: Only OpenID Connect connections are created through the API.
+        issuer: { type: string, description: Issuer URL or domain of the identity provider. }
+        client_id: { type: string, maxLength: 255 }
+        client_secret: { type: string, writeOnly: true }
+        allowed_domains:
+          type: array
+          items: { type: string }
+
+    UpdateSSOConnectionRequest:
+      type: object
+      properties:
+        name: { type: string, maxLength: 255 }
+        issuer: { type: string }
+        client_id: { type: string, maxLength: 255 }
+        client_secret: { type: string, writeOnly: true }
+        allowed_domains:
+          type: array
+          items: { type: string }
+
+    SSOConnectionResponse:
+      type: object
+      properties:
+        message: { type: string }
+        connection: { "$ref": "#/components/schemas/SSOConnection" }
 
     StatusSummary:
       type: object
@@ -2162,6 +2237,103 @@ paths:
       responses:
         "204":
           description: Deleted
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+
+  # ── SSO connections ───────────────────────────────────────────────────────────
+
+  /v2/sso-connections:
+    get:
+      operationId: listSSOConnections
+      summary: List the SSO connections of the API key's project
+      tags: [sso-connections]
+      responses:
+        "200":
+          description: Every connection of the project
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  connections:
+                    type: array
+                    items: { "$ref": "#/components/schemas/SSOConnection" }
+        "401":
+          description: Unauthorized
+    post:
+      operationId: createSSOConnection
+      summary: Create an OpenID Connect connection
+      description: The issuer's discovery document and the client credentials are checked before anything is saved or billed.
+      tags: [sso-connections]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { "$ref": "#/components/schemas/CreateSSOConnectionRequest" }
+      responses:
+        "201":
+          description: Connection created
+          content:
+            application/json:
+              schema: { "$ref": "#/components/schemas/SSOConnectionResponse" }
+        "400":
+          description: Bad request, or the identity provider refused the settings
+        "401":
+          description: Unauthorized
+
+  /v2/sso-connections/{uuid}:
+    parameters:
+      - name: uuid
+        in: path
+        required: true
+        schema: { type: string }
+    get:
+      operationId: getSSOConnection
+      summary: Get an SSO connection
+      tags: [sso-connections]
+      responses:
+        "200":
+          description: Connection details
+          content:
+            application/json:
+              schema: { "$ref": "#/components/schemas/SSOConnectionResponse" }
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+    put:
+      operationId: updateSSOConnection
+      summary: Update an OpenID Connect connection
+      tags: [sso-connections]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { "$ref": "#/components/schemas/UpdateSSOConnectionRequest" }
+      responses:
+        "200":
+          description: Connection updated
+          content:
+            application/json:
+              schema: { "$ref": "#/components/schemas/SSOConnectionResponse" }
+        "400":
+          description: Bad request, the identity provider refused the settings, or the connection is not OpenID Connect
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+    delete:
+      operationId: deleteSSOConnection
+      summary: Delete an OpenID Connect connection
+      description: Refused while a status page uses the connection.
+      tags: [sso-connections]
+      responses:
+        "200":
+          description: Deleted
+        "400":
+          description: A status page uses the connection, or it is not OpenID Connect
         "401":
           description: Unauthorized
         "404":

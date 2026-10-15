@@ -24,6 +24,9 @@ const (
 	// ReportsBasePath is the base path for report endpoints (v2).
 	ReportsBasePath = "/v2/reporting/monitor-reports"
 
+	// SSOConnectionsBasePath is the base path for status-page SSO connection endpoints (v2).
+	SSOConnectionsBasePath = "/v2/sso-connections"
+
 	// StatuspagesBasePath is the base path for status page endpoints (v2).
 	StatuspagesBasePath = "/v2/statuspages"
 )

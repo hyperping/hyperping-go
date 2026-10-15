@@ -68,8 +68,11 @@ func TestOASSpec_AllClientOperationsPresent(t *testing.T) {
 		"updateStatusPage", "deleteStatusPage",
 		// subscribers
 		"listSubscribers", "addSubscriber", "getSubscriber", "deleteSubscriber",
+		// sso connections
+		"listSSOConnections", "createSSOConnection", "getSSOConnection",
+		"updateSSOConnection", "deleteSSOConnection",
 	}
-	require.Len(t, expectedIDs, 42)
+	require.Len(t, expectedIDs, 47)
 
 	spec := readOASSpec(t)
 	paths, ok := spec["paths"].(map[string]any)
@@ -227,6 +230,8 @@ func TestOASSpec_NullableFieldsUseTupleType(t *testing.T) {
 		{"Outage", "acknowledgedAt"},
 		{"TeamMember", "ssoPictureUrl"},
 		{"StatusPage", "hostname"},
+		{"SSOConnection", "issuer"},
+		{"SSOConnection", "client_id"},
 	}
 
 	for _, tc := range cases {
